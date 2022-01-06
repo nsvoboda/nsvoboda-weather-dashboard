@@ -7,7 +7,7 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
     <link rel="style sheet" href="./assets/css/style.css">
     <title>Weather Dashboard</title>
 </head>
@@ -24,8 +24,17 @@
             <section class="col-12 col-lg-3 bg-light py-4 mblank-0 d-flex flex-column" id="search-form">
                 <form class="form-group" id="searchCityForm">
                     <label for="searchCity" class="col col-12">Search for a City</label>
+                    <div class="form-check-inline col col-12 px-3">
+                        <input type="text" class="form-input" id="searchCity" autofocus="true" aria-describedby="searchCity" />
+                        <button type="submit" class="btn btn-primary" id="searchCityForm">
+                            <span class="fas fa-search"></span>
+                        </button>
+                    </div>
                 </form>
+                <li class="list-group col col-12 d-none d-lg-block px-3" id="display-weather-info"></li>
             </section>
+
+            
         </div>
     </main>
 
