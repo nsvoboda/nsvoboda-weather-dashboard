@@ -60,7 +60,7 @@ var getUVIndex = function(lat,lon){
 };
 
 var getForecast = function(lat,lon){
-    var apiUrl = forecastWeatherApiStarts + "&lat=" + lat + "&lon=" + lon + "&exclude=current,minutely,hourly" + "&" + personalAPIKey + "&" + unit;
+    var apiUrl = forecastWeatherApiStarts + "lat=" + lat + "&lon=" + lon + "&exclude=current,minutely,hourly" + "&" + personalAPIKey + "&" + unit;
     fetch(apiUrl).then(function(response){
         return response.json();
     })
@@ -70,7 +70,10 @@ var getForecast = function(lat,lon){
             var date = moment.unix(unixTime).format("MM/DD/YY");
             $("#Date" + i).html(date);
 
-            var weatherIconUrl = "https://openweathermap.org/img/wn/" + response.daily[i].temp.day + " \u00B0F";
+            var weatherIconUrl = "https://openweathermap.org/img/wn/" + response.daily[i].weather[0].icon + "@2x.png";
+            $("#weatherIconDay" + i).attr("src", weatherIconUrl);
+
+            var temp = response.daily[i].temp.day + " \u00B0F";
             $("#tempDay" + i).html(temp);
 
             var humidity = response.daily[i].humidity;
@@ -146,3 +149,29 @@ var createCityNameBtn = function(searchCityName){
         });
     }
 };
+
+loadSavedCity();
+
+var formSubmitHandler = function(event){
+    event.preventDefault();
+    
+    var searchCityName = $("#searchCity").val().trim();
+    var newCity = saveCityName(searchCityName);
+    getCityWeather(searchCityName);
+    if (newCity == 1){
+        createCityNameBtn(searchCityName);
+    }
+};
+var BtnClickHandler = function (event){
+    event.preventDefault();
+
+    var searchCityName = event.target.textContent.trim();
+    getCityWeather(searchCityName);
+};
+
+$("#searchCityForm").on("submit", function(){
+    formSubmitHandler(event);
+});
+$(":button.list-group-item-action").on("click", function(){
+    BtnClickHandler(event);
+});
