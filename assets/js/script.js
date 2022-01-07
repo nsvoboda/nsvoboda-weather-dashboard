@@ -39,3 +39,22 @@ var getCityWeather = function(searchCityName){
         }
     });
 };
+
+var getUVIndex = function(lat,lon){
+    var apiUrl = dailyUVIndexApiStarts + personalAPIKey + "&lat=" + lat + "&lon=" + lon + "&" + unit;
+
+    fetch(apiUrl).then(function(response){
+        return response.json();
+    })
+    .then(function(response){
+        $("#UVIndexToday").removeClass();
+        $("#UVIndexToday").html(response.value);
+        if(response.value < 3){
+            $("#UVIndexToday").addClass("p-1 rounded bg-success text-white");
+        } else if (response.value < 8) {
+            $("#UVIndexToday").addClass("p-1 rounded bg-warning text-white");
+        } else {
+            $("#UVIndexToday").addClass("p-1 rounded bg-warning text-white");
+        }
+    });
+};
