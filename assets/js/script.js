@@ -58,3 +58,23 @@ var getUVIndex = function(lat,lon){
         }
     });
 };
+
+var getForecast = function(lat,lon){
+    var apiUrl = forecastWeatherApiStarts + "&lat=" + lat + "&lon=" + lon + "&exclude=current,minutely,hourly" + "&" + personalAPIKey + "&" + unit;
+    fetch(apiUrl).then(function(response){
+        return response.json();
+    })
+    .then(function(response){
+        for (var i = 1; i < 6; i++){
+            var unixTime = response.daily[i].dt;
+            var date = moment.unix(unixTime).format("MM/DD/YY");
+            $("#Date" + i).html(date);
+
+            var weatherIconUrl = "https://openweathermap.org/img/wn/" + response.daily[i].temp.day + " \u00B0F";
+            $("#tempDay" + i).html(temp);
+
+            var humidity = response.daily[i].humidity;
+            $("#humidityDay" + i).html(humidity + " %");
+        }
+    });
+};
