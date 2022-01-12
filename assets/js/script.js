@@ -26,7 +26,7 @@ var getCityWeather = function(searchCityName){
                 $("#weatherIconToday").attr("src", weatherIconUrl);
                 $("#tempToday").html(response.main.temp + " \u00B0F");
                 $("#humidityToday").html(response.main.humidity + " %");
-                $("#windSpeedToday").html(response.wind.speed + " MPH");
+                $("#windSpeedToday").html(response.wind_speed + " MPH");
 
                 var lat = response.coord.lat;
                 var lon = response.coord.lon;
