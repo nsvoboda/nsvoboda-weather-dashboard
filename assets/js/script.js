@@ -14,6 +14,7 @@ var getCityWeather = function(searchCityName){
     var apiUrl = dailyWeatherApiStarts + searchCityName + "&" + personalAPIKey + "&" + unit;
 
     fetch(apiUrl).then(function(response){
+        console.log(response.dt);
         if(response.ok){
             return response.json().then(function(response){
                 $("#cityName").html(response.name);
