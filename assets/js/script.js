@@ -8,6 +8,8 @@ var forecastWeatherApiStarts = "https://api.openweathermap.org/data/2.5/onecall?
 
 var searchCityForm = $("#searchCityForm");
 var searchedCities = $("#searchedCityLi");
+var historyContainer = $('#history')
+
 
 var getCityWeather = function(searchCityName){
 
@@ -27,7 +29,7 @@ var getCityWeather = function(searchCityName){
                 $("#weatherIconToday").attr("src", weatherIconUrl);
                 $("#tempToday").html(response.main.temp + " \u00B0F");
                 $("#humidityToday").html(response.main.humidity + " %");
-                $("#windSpeedToday").html(response.wind_speed + " MPH");
+                $("#windSpeedToday").html(response.main.wind_speed + " MPH");
 
                 var lat = response.coord.lat;
                 var lon = response.coord.lon;
@@ -124,6 +126,37 @@ var saveCityName = function(searchCityName){
     newCity = 1;
     return newCity;
 };
+
+//display the search hisotry list 
+function renderHistory(){
+    historyContainer.innerhtml = '';
+    // starting at the end of the history array and then counting down to show the most recent city at the top
+    for( var  i = citiesListArr.length-1;i >=0;i-- ) {
+        var button = document.createElement('button');
+        button.setAttribute('type', 'button');
+        button.classList.add('history-btn', 'btn-history');
+        button.setAttribute('data-search', citiesListArr[i]);
+        button.textContent = citiesListArr[i];
+        historyContainer.append(button)
+    }
+}
+// update history in local storage
+function appendHistory() {
+    if( citiesListArr.indexOf(search) !== -1){
+        return;
+    }
+    citiesListArr.push(search);
+    localStorage.setItem('search-history', JSON.stringify(citiesListArr));
+    renderHistory();
+}
+
+function initializeSearch() {
+    var stored = localStorage.getItem('search-history');
+    if (stored) {
+        citiesListArr = JSON.parse(stored);
+    }
+    renderHistory()
+}
 
 var createCityNameBtn = function(searchCityName){
     var saveCities = JSON.parse(localStorage.getItem("weatherInfo"));
